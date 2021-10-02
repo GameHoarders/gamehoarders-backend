@@ -16,6 +16,7 @@ const PORT = process.env.PORT;
 
 const ratingHandler = require('./Modules/Rating');
 const newGamesHandler = require('./Modules/NewGames');
+const pcHandler = require('./Modules/PcGames');
 
 //______________________________________// FUNCTIONS \\______________________________________\\
 
@@ -31,7 +32,7 @@ server.get('/home/newgames',newGamesHandler);
 
 //https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&platforms=4&platforms_count=1&ordering=-released&dates=2010-01-01,2021-10-02  OR
 //https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&platforms=4&ordering=-released&dates=2010-01-01,2021-10-02
-// server.get('/home/pc',pcHandler);
+server.get('/home/pc',pcHandler);
 
 //https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&platforms=187,18,16&ordering=-released&dates=2010-01-01,2021-10-02
 // server.get('/home/playstation',playstationHandler);
