@@ -12,7 +12,7 @@ let year = newDate.getFullYear();
 //https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&platforms=4&ordering=-released&dates=2010-01-01,2021-10-02
 function pcHandler(req, res) {
     try {
-        let gameURL = `https://api.rawg.io/api/games?key=${process.env.API_KEY}&platforms=4&ordering=-released&dates=${year}-01-01,${year}-${month < 10 ? `0${month}` : `${month}`}-${date < 10 ? `0${date}` : `${date}`}&metacritic=80,100`;
+        let gameURL = `https://api.rawg.io/api/games?key=${process.env.API_KEY}&platforms=4&ordering=-released&dates=${year-4}-01-01,${year}-${month < 10 ? `0${month}` : `${month}`}-${date < 10 ? `0${date}` : `${date}`}&metacritic=80,100&platforms_count=1`;
         // console.log(gameURL);
         axios.get(gameURL).then(gameDataArray => {
             let gameData = gameDataArray.data.results.map(element => {
