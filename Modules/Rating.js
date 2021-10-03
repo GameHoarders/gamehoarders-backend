@@ -31,6 +31,8 @@ class Games {
     constructor(element) {
         this.name = element.name;
         this.image = element.background_image;
+        this.slug = element.slug;
+        this.rating = element.rating;
     }
 }
 

@@ -19,6 +19,9 @@ const newGamesHandler = require('./Modules/NewGames');
 const pcHandler = require('./Modules/PcGames');
 const playstationHandler = require('./Modules/PSGames');
 const xboxHandler = require('./Modules/XboxGames');
+const searchHandler = require('./Modules/Search');
+const gameHandler = require('./Modules/Game');
+
 
 
 //______________________________________// FUNCTIONS \\______________________________________\\
@@ -42,6 +45,13 @@ server.get('/home/playstation',playstationHandler);
 
 //https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&platforms=14,1,3,186&ordering=-released&dates=2010-01-01,2021-10-02
 server.get('/home/xbox',xboxHandler);
+
+https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&search=god
+server.get('/home/search',searchHandler);
+
+//https://api.rawg.io/api/games/{slug}?key=31ed97f5afa843cba25e360868e7e2be&
+//https://localhost:3001/home/search?gameName=crysis
+server.get('/home/game',gameHandler);
 
 
 server.listen(PORT, () => {
