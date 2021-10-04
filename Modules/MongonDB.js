@@ -68,6 +68,7 @@ function addGameHandler(req, res) {
 
 function deleteGameHandler(req, res) {
     let { gameID, userName } = req.query;
+    console.log(gameID);
     gameModel.deleteOne({
         _id: gameID
     }).then(() => {
