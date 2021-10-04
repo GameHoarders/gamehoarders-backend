@@ -11,8 +11,8 @@ server.use(cors());
 require('dotenv').config();
 const PORT = process.env.PORT;
 
-// const mongoose = require('mongoose');
-// mongoose.connect(`${process.env.MONGO_DB}`);
+const mongoose = require('mongoose');
+mongoose.connect(`${process.env.MONGO_DB}`);
 
 const ratingHandler = require('./Modules/Rating');
 const newGamesHandler = require('./Modules/NewGames');
@@ -21,6 +21,13 @@ const playstationHandler = require('./Modules/PSGames');
 const xboxHandler = require('./Modules/XboxGames');
 const searchHandler = require('./Modules/Search');
 const gameHandler = require('./Modules/Game');
+
+server.use(express.json());
+const gameDB = require('./Modules/MongonDB');
+const fevGamesHandler = gameDB.games;
+const deleteGameHandler = gameDB.deletegames;
+const updateNoteHandler = gameDB.updateNotes;
+const addGameHandler = gameDB.addgames;
 
 
 
@@ -53,6 +60,17 @@ server.get('/home/search',searchHandler);
 //https://localhost:3001/home/search?gameName=crysis
 server.get('/home/game',gameHandler);
 
+//http://localhost:3001/profile?userName=mohammad....
+server.get('/profile',fevGamesHandler);
+
+// http://localhost:3001/books
+server.post('/profile', addGameHandler);
+
+//http://localhost:3001/profile?gameID=asd&userName=mohammad
+server.delete('/profile', deleteGameHandler);
+
+// http://localhost:3001/profile
+server.put('/profile', updateNoteHandler);
 
 server.listen(PORT, () => {
     console.log('Server is listening');
