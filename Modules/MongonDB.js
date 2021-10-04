@@ -60,7 +60,6 @@ function addGameHandler(req, res) {
         note: gameNote,
         email: userName
     }).then(() => {
-
         mongoFindHandler({ email: userName }, res);
     }
     );
