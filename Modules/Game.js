@@ -36,7 +36,7 @@ function findReq(game) {
     if(data === undefined){
         return "This has no requirements"
     }else{
-
+        
         return data.requirements;
     }
 }
