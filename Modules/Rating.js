@@ -33,6 +33,7 @@ class Games {
         this.image = element.background_image;
         this.slug = element.slug;
         this.rating = element.rating;
+        this.id = element.id;
     }
 }
 
