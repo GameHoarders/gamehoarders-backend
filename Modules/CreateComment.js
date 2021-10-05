@@ -35,7 +35,6 @@ async function createComment(req, res) {
         error ? console.log("error in getting data", error) : res.send(results);
     });
 }
-
 // let commentModel = require("../Schemas/GenralComments");
 
 async function deleteComment(req, res) {
@@ -67,6 +66,4 @@ async function updateComment(req, res) {
 
 
 module.exports = { createComment, deleteComment, updateComment, commentsMatcher }
-// module.exports = commentModel;
-// module.exports = deleteComment;
-// module.exports = updateComment;
+
