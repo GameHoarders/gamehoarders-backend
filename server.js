@@ -29,13 +29,27 @@ const deleteGameHandler = gameDB.deletegames;
 const updateNoteHandler = gameDB.updateNotes;
 const addGameHandler = gameDB.addgames;
 
-
+const comment = require("./Modules/CreateComment");
+const createComment = comment.createComment;
+const updateComment = comment.updateComment;
+const deleteComment = comment.deleteComment;
+const commentsMatcher = comment.commentsMatcher;
 
 //______________________________________// FUNCTIONS \\______________________________________\\
 
 
 
 //______________________________________// ROUTS \\______________________________________\\
+server.get("/gcomment", commentsMatcher);
+
+// http://localhost:3001/gcomment
+server.post("/gcomment", createComment);
+
+// http://localhost:3001/gcomment
+server.put("/gcomment", updateComment);
+
+// http://localhost:3001/gcomment
+server.delete("/gcomment", deleteComment);
 
 //http://localhost:3001/home/toprating?key=31ed97f5afa843cba25e360868e7e2be&ordering=-rating
 server.get('/home/toprating',ratingHandler);
