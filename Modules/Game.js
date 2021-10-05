@@ -36,7 +36,6 @@ function findReq(game) {
     if(data === undefined){
         return "This has no requirements"
     }else{
-        
         return data.requirements;
     }
 }
@@ -48,6 +47,7 @@ class Games {
         this.image = element.background_image;
         this.description = element.description_raw;
         this.rating = element.rating;
+        this.id = element.id;
         // this.requirements = element.platforms.find(element2 => {
         //     console.log(11111111, element2.platform.slug);
         //     if (element2.platform.slug === 'pc') {

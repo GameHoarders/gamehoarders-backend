@@ -28,6 +28,7 @@ function mongoFindHandler(obj, res) {
         if (error) {
             console.log('error in getting data', error);
         } else {
+            
             res.send(data);
         }
     });
