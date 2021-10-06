@@ -11,21 +11,58 @@ server.use(cors());
 require('dotenv').config();
 const PORT = process.env.PORT;
 
-// const mongoose = require('mongoose');
-// mongoose.connect(`${process.env.MONGO_DB}`);
+const mongoose = require('mongoose');
+mongoose.connect(`${process.env.MONGO_DB}`);
 
 const ratingHandler = require('./Modules/Rating');
 const newGamesHandler = require('./Modules/NewGames');
 const pcHandler = require('./Modules/PcGames');
 const playstationHandler = require('./Modules/PSGames');
 const xboxHandler = require('./Modules/XboxGames');
+const searchHandler = require('./Modules/Search');
+const gameHandler = require('./Modules/Game');
+
+server.use(express.json());
+const gameDB = require('./Modules/MongonDB');
+const fevGamesHandler = gameDB.games;
+const deleteGameHandler = gameDB.deletegames;
+const updateNoteHandler = gameDB.updateNotes;
+const addGameHandler = gameDB.addgames;
+
+const comment = require("./Modules/CreateComment");
+const createComment = comment.createComment;
+const updateComment = comment.updateComment;
+const deleteComment = comment.deleteComment;
+const commentsMatcher = comment.commentsMatcher;
+
+// const createComment = require("./Modules/CreateComment/createComment");
+// const updateComment = require("./Modules/CreateComment/updateComment");
+// const deleteComment = require("./Modules/CreateComment/deleteComment");
 
 
 //______________________________________// FUNCTIONS \\______________________________________\\
+server.get("/gcomment", commentsMatcher);
 
+// http://localhost:3001/gcomment
+server.post("/gcomment", createComment);
 
+// http://localhost:3001/gcomment
+server.put("/gcomment", updateComment);
+
+// http://localhost:3001/gcomment
+server.delete("/gcomment", deleteComment);
 
 //______________________________________// ROUTS \\______________________________________\\
+server.get("/gcomment", commentsMatcher);
+
+// http://localhost:3001/gcomment
+server.post("/gcomment", createComment);
+
+// http://localhost:3001/gcomment
+server.put("/gcomment", updateComment);
+
+// http://localhost:3001/gcomment
+server.delete("/gcomment", deleteComment);
 
 //http://localhost:3001/home/toprating?key=31ed97f5afa843cba25e360868e7e2be&ordering=-rating
 server.get('/home/toprating',ratingHandler);
@@ -38,11 +75,29 @@ server.get('/home/newgames',newGamesHandler);
 server.get('/home/pc',pcHandler);
 
 //https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&platforms=187,18,16&ordering=-released&dates=2010-01-01,2021-10-02
-server.get('/home/playstation',playstationHandler);
+server.get('/home/ps',playstationHandler);
 
 //https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&platforms=14,1,3,186&ordering=-released&dates=2010-01-01,2021-10-02
 server.get('/home/xbox',xboxHandler);
 
+// https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&search=god
+server.get('/home/search',searchHandler);
+
+//https://api.rawg.io/api/games/{slug}?key=31ed97f5afa843cba25e360868e7e2be&
+//https://localhost:3001/home/search?gameName=crysis
+server.get('/home/game',gameHandler);
+
+//http://localhost:3001/profile?userName=mohammad....
+server.get('/profile',fevGamesHandler);
+
+// http://localhost:3001/books
+server.post('/profile', addGameHandler);
+
+//http://localhost:3001/profile?gameID=asd&userName=mohammad
+server.delete('/profile', deleteGameHandler);
+
+// http://localhost:3001/profile
+server.put('/profile', updateNoteHandler);
 
 server.listen(PORT, () => {
     console.log('Server is listening');

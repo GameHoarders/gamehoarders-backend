@@ -2,17 +2,11 @@
 
 let axios = require('axios');
 
-let newDate = new Date();
-let date = newDate.getDate();
-let month = newDate.getMonth() + 1;
-let year = newDate.getFullYear();
-
-// `${year}${month < 10 ? `0${month}` : `${month}`}${date}`;
-
-//https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&ordering=-released&dates=2010-01-01,2021-10-02
-function newGamesHandler(req, res) {
+//https://api.rawg.io/api/games?key=31ed97f5afa843cba25e360868e7e2be&search=god
+function searchHandler(req, res) {
     try {
-        let gameURL = `https://api.rawg.io/api/games?key=${process.env.API_KEY}&ordering=-released&dates=${year}-01-01,${year}-${month < 10 ? `0${month}` : `${month}`}-${date < 10 ? `0${date}` : `${date}`}&metacritic=80,100`;
+        let gameName = req.query.gameName;
+        let gameURL = `https://api.rawg.io/api/games?key=${process.env.API_KEY}&search=${gameName}`;
         // console.log(gameURL);
         axios.get(gameURL).then(gameDataArray => {
             let gameData = gameDataArray.data.results.map(element => {
@@ -36,4 +30,4 @@ class Games {
     }
 }
 
-module.exports = newGamesHandler;
+module.exports = searchHandler;
