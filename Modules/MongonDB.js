@@ -28,7 +28,6 @@ function mongoFindHandler(obj, res) {
         if (error) {
             console.log('error in getting data', error);
         } else {
-            
             res.send(data);
         }
     });
@@ -51,19 +50,39 @@ function fevGamesHandler(req, res) {
 
 
 function addGameHandler(req, res) {
-    console.log(3333, req.body);
-    let { gameName, gameImageURL, gameRating,gameNote ,userName } = req.body;
+    // console.log(3333, req.body);
+    let { gameName, gameImageURL, gameRating, gameNote, userName } = req.body;
+    gameModel.find({ name: gameName,email:userName }, function (error, data) {
+        if (error) {
+            console.log(error);
+        } else {
+            if (data.length === 0) {
+                gameModel.create({
+                    name: gameName,
+                    imageURL: gameImageURL,
+                    rating: gameRating,
+                    note: gameNote,
+                    email: userName
+                }).then(() => {
+                    mongoFindHandler({ email: userName }, res);
+                }
+                );
+            }
+            console.log(11, data);
+        }
+    });
 
-    gameModel.create({
-        name: gameName,
-        imageURL: gameImageURL,
-        rating: gameRating,
-        note: gameNote,
-        email: userName
-    }).then(() => {
-        mongoFindHandler({ email: userName }, res);
-    }
-    );
+    // gameModel.create({
+    //     name: gameName,
+    //     imageURL: gameImageURL,
+    //     rating: gameRating,
+    //     note: gameNote,
+    //     email: userName
+    // }).then(() => {
+    //     mongoFindHandler({ email: userName }, res);
+    // }
+    // );
+
 }
 
 function deleteGameHandler(req, res) {
@@ -72,7 +91,6 @@ function deleteGameHandler(req, res) {
     gameModel.deleteOne({
         _id: gameID
     }).then(() => {
-
         mongoFindHandler({ email: userName }, res);
     }
     );
@@ -80,7 +98,7 @@ function deleteGameHandler(req, res) {
 
 
 function updateNoteHandler(req, res) {
-    let {gameName, gameImageURL, gameRating,gameNote ,userName , gameID} = req.body;
+    let { gameName, gameImageURL, gameRating, gameNote, userName, gameID } = req.body;
     gameModel.findByIdAndUpdate(gameID, {
         name: gameName,
         imageURL: gameImageURL,
@@ -96,4 +114,4 @@ function updateNoteHandler(req, res) {
 
 
 
-module.exports = { games: fevGamesHandler, deletegames: deleteGameHandler, updateNotes: updateNoteHandler, addgames: addGameHandler};
+module.exports = { games: fevGamesHandler, deletegames: deleteGameHandler, updateNotes: updateNoteHandler, addgames: addGameHandler };
